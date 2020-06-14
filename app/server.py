@@ -12,7 +12,7 @@ from object_detection_fastai.helper.object_detection_helper import process_outpu
     rescale_boxes
 from starlette.applications import Starlette
 from starlette.middleware.cors import CORSMiddleware
-from starlette.responses import HTMLResponse, JSONResponse
+from starlette.responses import HTMLResponse, JSONResponse, PlainTextResponse
 from starlette.staticfiles import StaticFiles
 
 export_file_url: str = 'https://drive.google.com/uc?id=1-3uuNy4lXWL6H5LZaWv8yWEbDfI5TxKv'
@@ -104,6 +104,10 @@ async def analyze(request):
     pred = prediction(img)
     return JSONResponse({'result': pred})
 
+
+@app.route('/ping')
+async def ping(request):
+    return PlainTextResponse('pong')
 
 if __name__ == '__main__':
     if 'serve' in sys.argv:
